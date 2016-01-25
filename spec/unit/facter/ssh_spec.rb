@@ -17,6 +17,7 @@ describe 'Facter::Util::Fact' do
       context "with <#{ssh_version_string}> it should return <#{result[:ssh_version]}>" do
         before do
           Facter.clear
+          Facter::Util::Resolution.expects(:exec).with('uname -s').returns('Linux')
           Facter::Util::Resolution.expects(:which).with('ssh').returns('/usr/bin/ssh')
           Facter::Util::Resolution.expects(:exec).with('ssh -V 2>&1').returns("#{ssh_version_string}")
         end
